@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
+const { getType } = require('mime');
 const cache = {}; // obiekt do przechowywania buforowanych plików
 
 function send404(res) {
@@ -12,7 +13,7 @@ function send404(res) {
 
 function sendFile(res, filePath, fileContents) {
   res.writeHead(200, {
-    'Content-Type': mime.lookup(path.basename(filePath)),
+    'Content-Type': getType('text/planet'),
   });
   res.end(fileContents);
 }
@@ -22,10 +23,10 @@ function serveStatic(res, cache, absPath) {
   if (cache[absPath]) {
     sendFile(res, absPath, cache[absPath]); // Udostępnienie pliku z pamięci
   } else {
-    fs.exists(absPath, function(exists) {
+    fs.exists(absPath, function (exists) {
       // Sprawdzenie, czy plik istnieje
       if (exists) {
-        fs.readFile(absPath, function(err, data) {
+        fs.readFile(absPath, function (err, data) {
           // Odczyt pliku dysku
           if (err) {
             send404(res);
@@ -41,7 +42,7 @@ function serveStatic(res, cache, absPath) {
   }
 }
 
-const server = http.createServer(function(req, res) {
+const server = http.createServer(function (req, res) {
   // Utworzenie serwera HTTP za pomocą funkcji anonimowej definiującej
   // zachowanie w poszczególnych żądaniach
   let filePath = false;
@@ -56,6 +57,10 @@ const server = http.createServer(function(req, res) {
   // Udostępnianie pliku statycznego
   let absPath = './' + filePath;
   serveStatic(res, cache, absPath);
+});
+
+server.listen(3001, function () {
+  console.log('Server is running at port: 3001');
 });
 
 
