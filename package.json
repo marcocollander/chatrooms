@@ -1,0 +1,19 @@
+{
+  "name": "chatrooms",
+  "version": "0.0.1",
+  "description": "Mini server chat rooms",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Zenon Marek Raubuć",
+  "license": "ISC",
+  "dependencies": {
+    "mime": "^3.0.0",
+    "socket.io": "^4.5.3"
+  },
+  "devDependencies": {
+    "prettier": "2.7.1"
+  }
+}
