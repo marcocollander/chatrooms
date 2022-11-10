@@ -1,2 +1,2 @@
 # chatrooms
-demo backend application
+Demo of the backend application
